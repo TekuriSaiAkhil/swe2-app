@@ -1,0 +1,28 @@
+language: python
+python:
+  - "3.8"
+
+install:
+  - pip install -r requirements.txt
+  - pip install black flake8
+  - pip install coveralls coverage
+
+script:
+  - pytest
+  - black --check .
+  - flake8 .
+  - coverage run --source=polls -m pytest
+
+after_success:
+  - coveralls
+
+deploy:
+  provider: elasticbeanstalk
+  on:
+    branch: main
+  access_key_id:  "$AWS_KEYID"
+  secret_access_key: "$AWS_SECRETKEY"
+  region: "us-east-1"
+  app: "sde-ass2"
+  env: "swe2-app"
+  bucket_name: "elasticbeanstalk-us-east-1-703671902509"
