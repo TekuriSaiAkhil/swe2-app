@@ -1,3 +1,4 @@
 asgiref
 Django
 sqlparse
+urllib3<2
